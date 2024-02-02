@@ -3,29 +3,156 @@
 }
 
 html, body {
+    color: whitesmoke;
+    background-color: #121212;
+    font-family: 'Smythe', sans-serif;
     margin: 0;
     padding: 0;
 }
 
 /* Typography and icons */
 
-.container {
-    width: 100%;
-    overflow-x: hidden; /* Prevents horizontal scrolling */
-    padding: 2.5rem;
+.title {
+    font-size: 2.5rem;
+}
+
+.top-link {
+    font-size: 1.125rem;
+}
+
+h2 {
+    color: #2E2E2F;
+}
+
+.empty {
+    color: #787878;
+    margin-bottom: 0;
 }
 
 /* Layout */
 
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    padding: 0;
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url("images/top-background-small.png");
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    width: 100%;
+    padding: 2.5rem;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    position: relative;
+    bottom: 1rem;
+}
+
+.input-movie {
+    color: whitesmoke;
+    font-size: 1rem;
+    background-image: url("images/search-icon.png");
+    background-repeat: no-repeat;
+    background-size: 4.5%;
+    background-position-y: center;
+    background-position-x: 1rem;
+    background-color: #A5A5A5;
+    width: 100%;
+    padding: 0.5rem 2.9rem;
+    border: none;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 100%;
+}
+
+.add-container-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 /* Buttons */
+
+.search-button {
+    font-size: 1rem;
+    background-color: #4B4B4B;
+    padding: 0.5rem 0.9rem;
+    border: none;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
 
 /* Images */
 
+.add-icon {
+    height: 40%;
+}
+
 /* Links */
+
+a {
+    color: whitesmoke;
+    text-decoration: none;
+}
 
 /* Media queries */
 
 /* @media(width >= 600px) */
 @media(min-width: 600px) {
+    /* Typography and icons */
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .top-link {
+        font-size: 1.5rem;
+    }
+
+    /* Layout */
+
+    header {
+        justify-content: space-around;
+        height: 250px;
+    }
+
+    .search-form {
+        width: 60%;
+    }
+
+    .input-movie {
+        font-size: 1.125rem;
+        background-size: 3%;
+        padding: 1.125rem 4rem;
+    }
+
+    /* Buttons */
+
+    .search-button {
+        font-size: 1.125rem;
+    }
 
 }

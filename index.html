@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Movie Watchlist</title>
+        <title>Movie Watchlist — search page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Favicon -->
         <!-- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -19,7 +19,25 @@
     </head>
     <body>
         <div class="container">
-            <h1>index.html</h1>
+            <header>
+                <h1 class="title">Find your film</h1>
+                <a class="top-link" href="watchlist.html">My Watchlist</a>
+            </header>
+            <main>
+                <div class="search-form" id="search-form">
+                    <input
+                        class="input-movie"
+                        id="input-movie"
+                        type="search"
+                        placeholder="Blade Runner"
+                        aria-label="Search a movie">
+                    <button class="search-button" id="search-button">Seacrh</button>
+                </div>
+                <div class="field-container">
+                    <img src="images/movie-icon.png">
+                    <h2>Start exploring</h2>
+                </div>
+            </main>
         </div>
         
         <script src="index.js" type="module"></script>
