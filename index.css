@@ -103,12 +103,14 @@ header {
     border: none;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+    cursor: pointer;
 }
 
 /* Images */
 
 .add-icon {
     height: 40%;
+    cursor: pointer;
 }
 
 /* Links */
