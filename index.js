@@ -15,6 +15,8 @@ document.addEventListener("click", function(e) {
         addToWatchList(e.target.dataset.add)
     } else if (e.target.id === "search-button") {
         handleSearchButtonClick()
+    } else if (e.target.dataset.remove) {
+        removeFromWatchList(e.target.dataset.remove)
     }
 })
 
@@ -45,34 +47,6 @@ function handleSearchButtonClick() {
         } )
     }
 }
-
-// function renderSearchResults(moviesArr) {
-
-//     moviesArr.forEach( function(movie) {
-//         let movieResultsHtml = ""
-
-//         movieResultsHtml += `
-//         <div class="movie-result">
-//             <img class="movie-poster" src="${movie.Poster}">
-//             <div class="movie-details">
-//                 <div>
-//                     <h4 class="movie-title">${movie.Title}</h4>
-//                     <p class="movie-rating"></p>
-//                 </div>
-//                 <div>
-//                     <p class="movie-year">${movie.Year}</p>
-//                     <p class="duration"></p>
-//                     <p class="genre"></p>
-//                     <button class="add-button" id="add-button">+</button>
-//                 </div>
-//                 <p class="movie-plot"></p>
-//             </div>
-//         </div>`
-
-//         searchResultsEl.innerHTML += movieResultsHtml
-
-//     })
-// }
 
 function renderSearchResults(movie) {
 
@@ -115,6 +89,10 @@ function addToWatchList(movieId) {
 
 function renderWatchlist() {
 
+    if (watchListEl) {
+        watchListEl.textContent = ""
+    }
+
     if (initialStateList && watchListEl && watchListFromLocalStorage && watchListFromLocalStorage.length > 0) {
 
         watchListFromLocalStorage = JSON.parse( localStorage.getItem("watchlist") )
@@ -137,7 +115,7 @@ function renderWatchlist() {
                             <p class="movie-year">${movie.Year}</p>
                             <p class="movie-duration">${movie.Runtime}</p>
                             <p class="movie-genre">${movie.Genre}</p>
-                            <button class="remove-button" data-remove="${movie.imdbID}">+</button>
+                            <button class="remove-button" data-remove="${movie.imdbID}">-</button>
                         </div>
                         <p class="movie-plot">${movie.Plot}</p>
                     </div>
@@ -146,4 +124,20 @@ function renderWatchlist() {
                 watchListEl.innerHTML += watchlistHtml
         })
     }
+}
+
+function removeFromWatchList(movieId) {
+    
+    const movieObject = watchListFromLocalStorage.filter( function(movie) {
+        return movie.imdbID === movieId
+    })[0]
+
+    let watchList = JSON.parse(localStorage.getItem("watchlist")) || []
+    console.log(watchList)
+    watchList = watchList.filter(
+        (movieItem) => !(movieItem.imdbID === movieObject.imdbID)
+    )
+    localStorage.setItem("watchlist", JSON.stringify(watchList))
+
+    renderWatchlist()
 }
