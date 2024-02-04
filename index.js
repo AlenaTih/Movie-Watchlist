@@ -84,6 +84,8 @@ function addToWatchList(movieId) {
     watchList.unshift(movieObject)
     localStorage.setItem("watchlist", JSON.stringify(watchList))
 
+    alert("Movie added to your watchlist!")
+
     renderWatchlist()
 }
 
