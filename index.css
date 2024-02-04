@@ -37,8 +37,9 @@ h2 {
     justify-content: center;
     width: 100%;
     overflow-x: hidden; /* Prevents horizontal scrolling */
-    padding: 0;
+    padding: 0 0 2.5rem 0;
     margin: 0 auto;
+    position: absolute;
 }
 
 header {
@@ -84,17 +85,55 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    min-height: 400px;
     width: 100%;
+    padding: 2.5rem;
+}
+
+.initial-state-main,
+.initial-state-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-container-main {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.movie-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.125rem;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #2C2C2C;
+}
+
+.title-and-rating {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 0.5rem;
+}
+
+.about-movie {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* Buttons */
+
+button {
+    cursor: pointer;
+}
 
 .search-button {
     font-size: 1rem;
@@ -103,14 +142,17 @@ header {
     border: none;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
-    cursor: pointer;
 }
 
 /* Images */
 
-.add-icon {
+.add-icon-main {
     height: 40%;
     cursor: pointer;
+}
+
+.movie-poster {
+    width: 60%;
 }
 
 /* Links */
@@ -151,10 +193,21 @@ a {
         padding: 1.125rem 4rem;
     }
 
+    .movie-result {
+        max-width: 80%;
+        padding-bottom: 2rem;
+    }
+
     /* Buttons */
 
     .search-button {
         font-size: 1.125rem;
+    }
+
+    /* Images */
+
+    .movie-poster {
+        width: 40%;
     }
 
 }
