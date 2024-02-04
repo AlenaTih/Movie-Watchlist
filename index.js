@@ -11,7 +11,6 @@ let movies = []
 
 document.addEventListener("click", function(e) {
     if (e.target.dataset.add) {
-        console.log("clicked")
         e.preventDefault()
         addToWatchList(e.target.dataset.add)
     } else if (e.target.id === "search-button") {
@@ -25,15 +24,9 @@ let moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
 
 let watchListFromLocalStorage = JSON.parse( localStorage.getItem("watchlist") )
 
-// watchListFromLocalStorage = [watchListFromLocalStorage]
-
 if (watchListFromLocalStorage && watchListFromLocalStorage.length > 0) {
     renderWatchlist()
 }
-// else {
-//     localStorage.setItem("movies", JSON.stringify(movies))
-//     moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
-// }
 
 function handleSearchButtonClick() {
 
@@ -43,6 +36,7 @@ function handleSearchButtonClick() {
         fetch(`http://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
             .then(response => response.json())
             .then(data => {
+
                 console.log(data)
 
                 // renderSearchResults(data.Search)
@@ -82,8 +76,6 @@ function handleSearchButtonClick() {
 
 function renderSearchResults(movie) {
 
-    // let movies = []
-
     initialStateMain.style.display = "none"
 
     searchResultsEl.innerHTML = `
@@ -109,19 +101,14 @@ function renderSearchResults(movie) {
 }
 
 function addToWatchList(movieId) {
-    console.log(movieId)
-
+    
     const movieObject = moviesFromLocalStorage.filter( function(movie) {
         return movie.imdbID === movieId
     })[0]
 
-    console.log(movieObject)
-
-    const newMovies = []
-
-    newMovies.push(movieObject)
-
-    localStorage.setItem("watchlist", JSON.stringify(newMovies))
+    let watchList = JSON.parse(localStorage.getItem("watchlist")) || []
+    watchList.unshift(movieObject)
+    localStorage.setItem("watchlist", JSON.stringify(watchList))
 
     renderWatchlist()
 }
@@ -158,25 +145,5 @@ function renderWatchlist() {
 
                 watchListEl.innerHTML += watchlistHtml
         })
-
-        // watchListEl.innerHTML += `
-        // <div class="movie-result" data-movie="${movie.imdbID}">
-        //     <img class="movie-poster" src="${movie.Poster}">
-        //     <div class="movie-details">
-        //         <div class="title-and-rating">
-        //             <h4 class="movie-title">${movie.Title}</h4>
-        //             <p class="movie-rating">${movie.Ratings[0].Value}</p>
-        //         </div>
-        //         <div class="about-movie">
-        //             <p class="movie-year">${movie.Year}</p>
-        //             <p class="movie-duration">${movie.Runtime}</p>
-        //             <p class="movie-genre">${movie.Genre}</p>
-        //             <button class="remove-button" data-remove="${movie.imdbID}">+</button>
-        //         </div>
-        //         <p class="movie-plot">${movie.Plot}</p>
-        //     </div>
-        // </div>`
     }
 }
-
-// renderWatchlist()

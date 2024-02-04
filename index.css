@@ -112,7 +112,7 @@ header {
     gap: 1.125rem;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 1.25rem;
+    padding: 1.25rem 0;
     border-bottom: 1px solid #2C2C2C;
 }
 
@@ -195,7 +195,7 @@ a {
 
     .movie-result {
         max-width: 80%;
-        padding-bottom: 2rem;
+        padding: 2rem 0;
     }
 
     /* Buttons */
