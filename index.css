@@ -26,7 +26,12 @@ h2 {
 
 .empty {
     color: #787878;
+    font-size: 1.25rem;
     margin-bottom: 0;
+}
+
+.lets-add {
+    font-size: 1rem;
 }
 
 /* Layout */
@@ -147,7 +152,8 @@ button {
 /* Images */
 
 .add-icon-main {
-    height: 40%;
+    /* height: 40%; */
+    width: 100%;
     cursor: pointer;
 }
 
@@ -157,9 +163,13 @@ button {
 
 /* Links */
 
-a {
+.top-link {
     color: whitesmoke;
     text-decoration: none;
+}
+
+.add-main {
+    width: 15%;
 }
 
 /* Media queries */
@@ -169,11 +179,19 @@ a {
     /* Typography and icons */
 
     .title {
-        font-size: 3rem;
+        font-size: 3.25rem;
     }
 
     .top-link {
+        font-size: 1.8rem;
+    }
+
+    .empty {
         font-size: 1.5rem;
+    }
+    
+    .lets-add {
+        font-size: 1.25rem;
     }
 
     /* Layout */
@@ -188,7 +206,7 @@ a {
     }
 
     .input-movie {
-        font-size: 1.125rem;
+        font-size: 1.25rem;
         background-size: 3%;
         padding: 1.125rem 4rem;
     }
@@ -201,13 +219,19 @@ a {
     /* Buttons */
 
     .search-button {
-        font-size: 1.125rem;
+        font-size: 1.25rem;
     }
 
     /* Images */
 
     .movie-poster {
         width: 40%;
+    }
+
+    /* Links */
+
+    .add-main {
+        width: 20%;
     }
 
 }
