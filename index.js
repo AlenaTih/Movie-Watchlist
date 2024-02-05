@@ -1,7 +1,25 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
+import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+
+const firebaseConfig = {
+    apiKey: "AIzaSyChR30UHiZ4u-_t1mbqPfBTY0g57Smr_HA",
+    authDomain: "realtime-database-67683.firebaseapp.com",
+    databaseURL: "https://realtime-database-67683-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "realtime-database-67683",
+    storageBucket: "realtime-database-67683.appspot.com",
+    messagingSenderId: "372372469204",
+    appId: "1:372372469204:web:f348e41f2bb53d7aaa9241"
+  }
+
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
+const movieDatainDB = ref(database, "MovieWatchlistData")
+
 const searchButton = document.getElementById("search-button")
 const inputMovie = document.getElementById("input-movie")
 const searchResultsEl = document.getElementById("search-results")
-const addButton = document.getElementById("add-button")
+
 const watchListEl = document.getElementById("watchlist")
 
 const initialStateMain = document.getElementById("initial-state-main")
@@ -24,11 +42,6 @@ localStorage.setItem("movies", JSON.stringify(movies))
 
 let moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
 
-let watchListFromLocalStorage = JSON.parse( localStorage.getItem("watchlist") )
-
-if (watchListFromLocalStorage && watchListFromLocalStorage.length > 0) {
-    renderWatchlist()
-}
 
 function handleSearchButtonClick() {
 
@@ -81,32 +94,43 @@ function addToWatchList(movieId) {
         return movie.imdbID === movieId
     })[0]
 
-    let watchList = JSON.parse(localStorage.getItem("watchlist")) || []
-    watchList.unshift(movieObject)
-    localStorage.setItem("watchlist", JSON.stringify(watchList))
+    // Push the watchlist data item to the database
+    push(movieDatainDB, movieObject)
 
     alert("Movie added to your watchlist!")
-
-    renderWatchlist()
 }
 
-function renderWatchlist() {
+onValue(movieDatainDB, function(snapshot) {
+    if (snapshot.exists()) {
 
-    if (watchListEl) {
-        watchListEl.textContent = ""
+        let movieObj = snapshot.val()
+
+        // let moviesArray = Object.entries(snapshot.val())
+
+        // renderWatchlist(moviesArray)
+        
+
+        console.log(movieObj)
+        for (let key in movieObj) {
+            renderWatchlist(movieObj[key], key)
+        }
     }
+})
 
-    if (initialStateList && watchListEl && watchListFromLocalStorage && watchListFromLocalStorage.length > 0) {
+// for...in loop is a special kind of loop in JavaScript that is used
+// to iterate over properties (or keys) of an object
 
-        watchListFromLocalStorage = JSON.parse( localStorage.getItem("watchlist") )
-        console.log(watchListFromLocalStorage)
+function renderWatchlist(movie, key) {
 
+    console.log(key)
+
+    if (initialStateList && watchListEl) {
         initialStateList.style.display = "none"
 
-        watchListFromLocalStorage.forEach( function(movie) {
-            let watchlistHtml = ""
-
-            watchlistHtml += `
+        let newMovie = document.createElement("li")
+    
+            for (let i = 0; i < 1; i++) {
+                newMovie.innerHTML = `
                 <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
                     <img class="movie-poster" src="${movie.Poster}">
                     <div class="movie-details">
@@ -118,30 +142,59 @@ function renderWatchlist() {
                             <p class="movie-year">${movie.Year}</p>
                             <p class="movie-duration">${movie.Runtime}</p>
                             <p class="movie-genre">${movie.Genre}</p>
-                            <image class="remove-button" data-remove="${movie.imdbID}"
+                            <image class="remove-button" data-remove="${key}"
                             src="images/remove-icon.png">
                         </div>
                         <p class="movie-plot">${movie.Plot}</p>
                     </div>
                 </div>`
 
-                watchListEl.innerHTML += watchlistHtml
-        })
-    }
+                watchListEl.prepend(newMovie)
+            }
+        }
 }
 
-function removeFromWatchList(movieId) {
+
+// function renderWatchlist(moviesArray) {
+
+
+//     if (initialStateList && watchListEl) {
+//         initialStateList.style.display = "none"    
+
+//         moviesArray.forEach( function(movie) {
+            
+//             let watchlistHtml = ""
     
-    const movieObject = watchListFromLocalStorage.filter( function(movie) {
-        return movie.imdbID === movieId
-    })[0]
+//                 watchlistHtml += `
+//                 <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
+//                     <img class="movie-poster" src="${movie.Poster}">
+//                     <div class="movie-details">
+//                         <div class="title-and-rating">
+//                             <h4 class="movie-title">${movie.Title}</h4>
+//                             <p class="movie-rating">${movie.Ratings[0].Value}</p>
+//                         </div>
+//                         <div class="about-movie">
+//                             <p class="movie-year">${movie.Year}</p>
+//                             <p class="movie-duration">${movie.Runtime}</p>
+//                             <p class="movie-genre">${movie.Genre}</p>
+//                             <image class="remove-button" data-remove="${movie.imdbID}"
+//                             src="images/remove-icon.png">
+//                         </div>
+//                         <p class="movie-plot">${movie.Plot}</p>
+//                     </div>
+//                 </div>`
 
-    let watchList = JSON.parse(localStorage.getItem("watchlist")) || []
-    console.log(watchList)
-    watchList = watchList.filter(
-        (movieItem) => !(movieItem.imdbID === movieObject.imdbID)
-    )
-    localStorage.setItem("watchlist", JSON.stringify(watchList))
+//                 watchListEl.innerHTML += watchlistHtml
+//             })
+//     }
+// }
 
-    renderWatchlist()
+function removeFromWatchList(movieKey) {
+    
+        console.log(movieKey)
+
+        let exactLocationOfItemInDB = ref(database, `MovieWatchlistData/${movieKey}`)
+        
+        remove(exactLocationOfItemInDB)
+
 }

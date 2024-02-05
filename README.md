@@ -1,21 +1,47 @@
-# co05e4229b1bf29c6e61b406d
+# Movie Watchlist
 
-Quick start:
+## Overview
 
-```
-$ npm install
-$ npm start
-````
+This is a simple web application that allows you to search for movies and add them to a watchlist. You can view your watchlist on a separate page.
 
-Head over to https://vitejs.dev/ to learn more about using vite
-## About Scrimba
+## Features
 
-At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
-If we succeed with this, it will give anyone who wants to become a software developer a realistic shot at succeeding, regardless of where they live and the size of their wallets 🎉
-The Frontend Developer Career Path aims to teach you everything you need to become a Junior Developer, or you could take a deep-dive with one of our advanced courses 🚀
+- **Search Movies:** Enter a movie title, and the app fetches information using the OMDb API.
+- **Add to Watchlist:** Add your favorite movies or the ones your want to watch to a watchlist with a click of a button.
+- **View Watchlist:** Check out all the movies you've added to your watchlist on the dedicated watchlist page.
 
-- [Our courses](https://scrimba.com/allcourses)
-- [The Frontend Career Path](https://scrimba.com/learn/frontend)
-- [Become a Scrimba Pro member](https://scrimba.com/pricing)
+## Usage
 
-Happy Coding!
+1. Enter a movie title in the search bar and click the search button.
+2. Click the "+" button on a movie to add it to your watchlist.
+3. Open the watchlist page to view all the movies you've added.
+
+## Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- The OMDb API
+
+## API
+
+This project uses the [OMDb API](https://www.omdbapi.com/) to fetch movie information.
+
+## Local Storage
+
+Movie and watchlist data are stored locally using `localStorage`.
+
+## Contributors
+
+- Alena Tikhomirova
+
+## Contribution
+
+If you have ideas to enhance this project or encounter any issues, feel free to contribute by opening an issue or submitting a pull request. Your input is highly valued!
+
+## Contact
+For inquiries or feedback, please contact me at alyonatihomirova9@gmail.com.
+
+## Acknowledgments
+
+This is a solo project I built in [Scrimba's](https://scrimba.com/) Frontend Development course. Scrimba is awesome!
