@@ -5,12 +5,17 @@
 html, body {
     color: whitesmoke;
     background-color: #121212;
-    font-family: 'Smythe', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     margin: 0;
     padding: 0;
 }
 
 /* Typography and icons */
+
+.title,
+.top-link {
+    font-family: 'Smythe', sans-serif;
+}
 
 .title {
     font-size: 2.5rem;
@@ -20,8 +25,9 @@ html, body {
     font-size: 1.125rem;
 }
 
-h2 {
+.start-exploring {
     color: #2E2E2F;
+    font-size: 1.125rem;
 }
 
 .empty {
@@ -32,6 +38,30 @@ h2 {
 
 .lets-add {
     font-size: 1rem;
+}
+
+.movie-title {
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+.movie-rating,
+.movie-year,
+.movie-duration,
+.movie-genre {
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.movie-year,
+.movie-duration,
+.movie-genre {
+    margin: 0;
+}
+
+.movie-plot {
+    font-size: 0.875rem;
+    font-weight: 300;
 }
 
 /* Layout */
@@ -110,7 +140,8 @@ header {
     margin-top: 0.5rem;
 }
 
-.movie-result {
+.movie-result,
+.movie-result-watchlist {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,6 +150,10 @@ header {
     margin: 0 auto;
     padding: 1.25rem 0;
     border-bottom: 1px solid #2C2C2C;
+}
+
+.movie-result-watchlist {
+    border-bottom: 1px solid #E5E7EB;
 }
 
 .title-and-rating {
@@ -152,13 +187,24 @@ button {
 /* Images */
 
 .add-icon-main {
-    /* height: 40%; */
     width: 100%;
     cursor: pointer;
 }
 
 .movie-poster {
-    width: 60%;
+    /* width: 60%; */
+    /* max-width: 100px; */
+    max-width: 40%;
+}
+
+.add-button {
+    cursor: pointer;
+    width: 20px;
+}
+
+.remove-button {
+    cursor: pointer;
+    width: 20px;
 }
 
 /* Links */
@@ -194,6 +240,24 @@ button {
         font-size: 1.25rem;
     }
 
+    .movie-title {
+        font-size: 1.375rem;
+        font-weight: 400;
+    }
+    
+    .movie-rating,
+    .movie-year,
+    .movie-duration,
+    .movie-genre {
+        font-size: 1rem;
+        font-weight: 300;
+    }
+    
+    .movie-plot {
+        font-size: 1.125rem;
+        font-weight: 300;
+    }
+
     /* Layout */
 
     header {
@@ -225,7 +289,12 @@ button {
     /* Images */
 
     .movie-poster {
-        width: 40%;
+        max-width: 40%;
+    }
+
+    .add-button,
+    .remove-button {
+        max-width: 5%;
     }
 
     /* Links */

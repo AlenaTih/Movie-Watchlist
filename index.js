@@ -64,7 +64,8 @@ function renderSearchResults(movie) {
                     <p class="movie-year">${movie.Year}</p>
                     <p class="movie-duration">${movie.Runtime}</p>
                     <p class="movie-genre">${movie.Genre}</p>
-                    <button class="add-button" data-add="${movie.imdbID}">+</button>
+                    <image class="add-button" data-add="${movie.imdbID}"
+                    src="images/add-icon.png">
                 </div>
                 <p class="movie-plot">${movie.Plot}</p>
             </div>
@@ -106,7 +107,7 @@ function renderWatchlist() {
             let watchlistHtml = ""
 
             watchlistHtml += `
-                <div class="movie-result" data-movie="${movie.imdbID}">
+                <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
                     <img class="movie-poster" src="${movie.Poster}">
                     <div class="movie-details">
                         <div class="title-and-rating">
@@ -117,7 +118,8 @@ function renderWatchlist() {
                             <p class="movie-year">${movie.Year}</p>
                             <p class="movie-duration">${movie.Runtime}</p>
                             <p class="movie-genre">${movie.Genre}</p>
-                            <button class="remove-button" data-remove="${movie.imdbID}">-</button>
+                            <image class="remove-button" data-remove="${movie.imdbID}"
+                            src="images/remove-icon.png">
                         </div>
                         <p class="movie-plot">${movie.Plot}</p>
                     </div>
