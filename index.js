@@ -50,7 +50,7 @@ function handleSearchButtonClick() {
     if (searchButton) {
         const movieTitle = inputMovie.value
 
-        fetch(`http://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
+        fetch(`https://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
             .then(response => response.json())
             .then(data => {
 
