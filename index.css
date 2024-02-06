@@ -170,6 +170,10 @@ header {
     gap: 0.5rem;
 }
 
+li {
+    list-style-type: none;
+}
+
 /* Buttons */
 
 button {

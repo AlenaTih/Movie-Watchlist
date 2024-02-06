@@ -2,11 +2,11 @@
 
 ## Overview
 
-This is a simple web application that allows you to search for movies and add them to a watchlist. You can view your watchlist on a separate page.
+This is a little but cute web app that allows you to search for movies and add them to a watchlist. You can view your watchlist on a separate page. And then watch these gems one by one!
 
 ## Features
 
-- **Search Movies:** Enter a movie title, and the app fetches information using the OMDb API.
+- **Search Movies:** Enter a movie title, and the app fetches information from the OMDb API.
 - **Add to Watchlist:** Add your favorite movies or the ones your want to watch to a watchlist with a click of a button.
 - **View Watchlist:** Check out all the movies you've added to your watchlist on the dedicated watchlist page.
 
@@ -21,15 +21,16 @@ This is a simple web application that allows you to search for movies and add th
 - HTML
 - CSS
 - JavaScript
+- Firebase Realtime Database
 - The OMDb API
 
 ## API
 
 This project uses the [OMDb API](https://www.omdbapi.com/) to fetch movie information.
 
-## Local Storage
+## Database
 
-Movie and watchlist data are stored locally using `localStorage`.
+Movie and watchlist data are stored in Firebase Realtime Database.
 
 ## Contributors
 
