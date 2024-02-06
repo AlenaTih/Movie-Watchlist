@@ -58,6 +58,10 @@ function handleSearchButtonClick() {
 
                 renderSearchResults(data)
         } )
+        // .catch(err => {
+        //     initialStateMain.innerHTML = `
+        //     <h2>Unable to find what you’re looking for. Please try another search.</h2>`
+        // })
     }
 }
 
