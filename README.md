@@ -30,7 +30,7 @@ This project uses the [OMDb API](https://www.omdbapi.com/) to fetch movie inform
 
 ## Database
 
-Movie and watchlist data are stored in Firebase Realtime Database.
+Movie and watchlist data are stored in the Firebase Realtime Database.
 
 ## Contributors
 
