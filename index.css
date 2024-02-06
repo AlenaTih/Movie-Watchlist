@@ -189,6 +189,7 @@ button {
 
 .search-button {
     font-size: 1rem;
+    color: whitesmoke;
     background-color: #4B4B4B;
     padding: 0.5rem 0.9rem;
     border: none;
