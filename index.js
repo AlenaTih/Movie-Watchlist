@@ -25,14 +25,16 @@ const watchListEl = document.getElementById("watchlist")
 const initialStateMain = document.getElementById("initial-state-main")
 const initialStateList = document.getElementById("initial-state-list")
 
+const thankYouEl = document.getElementById("thankyou-message")
+
 let movies = []
 
 document.addEventListener("click", function(e) {
-    if (e.target.dataset.add) {
+    if (e.target.id === "search-button") {
+        handleSearchButtonClick()
+    } else if (e.target.dataset.add) {
         e.preventDefault()
         addToWatchList(e.target.dataset.add)
-    } else if (e.target.id === "search-button") {
-        handleSearchButtonClick()
     } else if (e.target.dataset.remove) {
         removeFromWatchList(e.target.dataset.remove)
     }
@@ -51,8 +53,6 @@ function handleSearchButtonClick() {
         fetch(`http://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
             .then(response => response.json())
             .then(data => {
-
-                console.log(data)
 
                 // renderSearchResults(data.Search)
 
@@ -89,6 +89,8 @@ function renderSearchResults(movie) {
 }
 
 function addToWatchList(movieId) {
+
+    moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
     
     const movieObject = moviesFromLocalStorage.filter( function(movie) {
         return movie.imdbID === movieId
@@ -97,7 +99,19 @@ function addToWatchList(movieId) {
     // Push the watchlist data item to the database
     push(movieDatainDB, movieObject)
 
-    alert("Movie added to your watchlist!")
+    // Show thank you message
+    thankYouEl.style.display = "flex"
+    setTimeout( function() {
+        thankYouEl.style.opacity = "1"
+    }, 10)  // Slight delay to ensure the fade-in effect plays
+
+    // Hide the thank you message after 3 seconds
+    setTimeout( function() {
+        thankYouEl.style.opacity = "0"
+        setTimeout( function() {
+            thankYouEl.style.display = "none"
+        }, 1000)  // Hide after the fade-out effect completes
+    }, 3000)
 }
 
 onValue(movieDatainDB, function(snapshot) {
