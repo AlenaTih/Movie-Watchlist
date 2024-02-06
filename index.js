@@ -123,8 +123,6 @@ onValue(movieDatainDB, function(snapshot) {
 
         // renderWatchlist(moviesArray)
         
-
-        console.log(movieObj)
         for (let key in movieObj) {
             renderWatchlist(movieObj[key], key)
         }
@@ -135,8 +133,6 @@ onValue(movieDatainDB, function(snapshot) {
 // to iterate over properties (or keys) of an object
 
 function renderWatchlist(movie, key) {
-
-    console.log(key)
 
     if (initialStateList && watchListEl) {
         initialStateList.style.display = "none"
@@ -204,8 +200,6 @@ function renderWatchlist(movie, key) {
 // }
 
 function removeFromWatchList(movieKey) {
-    
-        console.log(movieKey)
 
         let exactLocationOfItemInDB = ref(database, `MovieWatchlistData/${movieKey}`)
         
