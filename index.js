@@ -32,7 +32,6 @@ const initialStateList = document.getElementById("initial-state-list")
 
 const thankYouEl = document.getElementById("thankyou-message")
 
-// Google Sign-in button
 const googleSignInButton = document.getElementById("google-signin-button")
 const googleSignOutButton = document.getElementById("google-signout-button")
 
@@ -54,7 +53,7 @@ googleSignInButton.addEventListener("click", () => {
     signInWithPopup(auth, provider)
         .then((result) => {
             // User signed in successfully
-            const user = result.user;
+            const user = result.user
             console.log("User signed in:", user)
         })
         .catch((error) => {
@@ -73,7 +72,7 @@ googleSignOutButton.addEventListener("click", () => {
             // Handle errors
             console.error("Error signing out:", error)
         })
-});
+})
 
 localStorage.setItem("movies", JSON.stringify(movies))
 
