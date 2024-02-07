@@ -1,5 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
 import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+// Import the Firebase Auth module
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"
 
 const firebaseConfig = {
     apiKey: "AIzaSyChR30UHiZ4u-_t1mbqPfBTY0g57Smr_HA",
@@ -16,6 +18,9 @@ const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
 const movieDatainDB = ref(database, "MovieWatchlistData")
 
+// Initialize Firebase Auth
+const auth = getAuth()
+
 const searchButton = document.getElementById("search-button")
 const inputMovie = document.getElementById("input-movie")
 const searchResultsEl = document.getElementById("search-results")
@@ -26,6 +31,10 @@ const initialStateMain = document.getElementById("initial-state-main")
 const initialStateList = document.getElementById("initial-state-list")
 
 const thankYouEl = document.getElementById("thankyou-message")
+
+// Google Sign-in button
+const googleSignInButton = document.getElementById("google-signin-button")
+const googleSignOutButton = document.getElementById("google-signout-button")
 
 let movies = []
 
@@ -39,6 +48,32 @@ document.addEventListener("click", function(e) {
         removeFromWatchList(e.target.dataset.remove)
     }
 })
+
+googleSignInButton.addEventListener("click", () => {
+    const provider = new GoogleAuthProvider()
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // User signed in successfully
+            const user = result.user;
+            console.log("User signed in:", user)
+        })
+        .catch((error) => {
+            // Handle errors
+            console.error("Error signing in:", error)
+        })
+})
+
+googleSignOutButton.addEventListener("click", () => {
+    signOut(auth)
+        .then(() => {
+            // User signed out successfully
+            console.log("User signed out")
+        })
+        .catch((error) => {
+            // Handle errors
+            console.error("Error signing out:", error)
+        })
+});
 
 localStorage.setItem("movies", JSON.stringify(movies))
 
@@ -124,8 +159,7 @@ onValue(movieDatainDB, function(snapshot) {
         let movieObj = snapshot.val()
 
         // let moviesArray = Object.entries(snapshot.val())
-
-        // renderWatchlist(moviesArray)
+        // console.log(moviesArray)
         
         for (let key in movieObj) {
             renderWatchlist(movieObj[key], key)
@@ -143,7 +177,6 @@ function renderWatchlist(movie, key) {
 
         let newMovie = document.createElement("li")
     
-            for (let i = 0; i < 1; i++) {
                 newMovie.innerHTML = `
                 <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
                     <img class="movie-poster" src="${movie.Poster}">
@@ -164,44 +197,8 @@ function renderWatchlist(movie, key) {
                 </div>`
 
                 watchListEl.prepend(newMovie)
-            }
         }
 }
-
-
-// function renderWatchlist(moviesArray) {
-
-
-//     if (initialStateList && watchListEl) {
-//         initialStateList.style.display = "none"    
-
-//         moviesArray.forEach( function(movie) {
-            
-//             let watchlistHtml = ""
-    
-//                 watchlistHtml += `
-//                 <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
-//                     <img class="movie-poster" src="${movie.Poster}">
-//                     <div class="movie-details">
-//                         <div class="title-and-rating">
-//                             <h4 class="movie-title">${movie.Title}</h4>
-//                             <p class="movie-rating">${movie.Ratings[0].Value}</p>
-//                         </div>
-//                         <div class="about-movie">
-//                             <p class="movie-year">${movie.Year}</p>
-//                             <p class="movie-duration">${movie.Runtime}</p>
-//                             <p class="movie-genre">${movie.Genre}</p>
-//                             <image class="remove-button" data-remove="${movie.imdbID}"
-//                             src="images/remove-icon.png">
-//                         </div>
-//                         <p class="movie-plot">${movie.Plot}</p>
-//                     </div>
-//                 </div>`
-
-//                 watchListEl.innerHTML += watchlistHtml
-//             })
-//     }
-// }
 
 function removeFromWatchList(movieKey) {
 
