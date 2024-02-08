@@ -121,7 +121,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 400px;
+    min-height: 250px;
     width: 100%;
     padding: 2.5rem;
 }
