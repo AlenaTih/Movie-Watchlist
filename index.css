@@ -134,6 +134,10 @@ header {
     justify-content: center;
 }
 
+.initial-state-list {
+    margin-top: 5rem;
+}
+
 .add-container-main {
     display: flex;
     align-items: center;
