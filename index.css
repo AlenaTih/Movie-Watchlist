@@ -309,7 +309,11 @@ button {
     .movie-result,
     .movie-result-watchlist {
         max-width: 80%;
-        padding: 2rem 0;
+        padding: 2.5rem 0;
+    }
+
+    .auth {
+        width: 20%;
     }
 
     /* Buttons */

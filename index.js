@@ -39,31 +39,40 @@ let movies = []
 
 document.addEventListener("click", function(e) {
     if (e.target.id === "search-button") {
+        e.preventDefault()
         handleSearchButtonClick()
     } else if (e.target.dataset.add) {
         e.preventDefault()
         addToWatchList(e.target.dataset.add)
     } else if (e.target.dataset.remove) {
         removeFromWatchList(e.target.dataset.remove)
+    } else if (e.target.id === "google-signin-button") {
+        signInWithGoogle()
+    } else if (e.target.id === "google-signout-button") {
+        signOutFromApp()
     }
 })
 
-googleSignInButton.addEventListener("click", () => {
-    const provider = new GoogleAuthProvider()
+function signInWithGoogle() {
+    if (googleSignInButton) {
+        const provider = new GoogleAuthProvider()
     signInWithPopup(auth, provider)
-        .then((result) => {
+        .then((response) => {
+            console.log(response)
             // User signed in successfully
-            const user = result.user
+            const user = response.user
             console.log("User signed in:", user)
         })
         .catch((error) => {
             // Handle errors
             console.error("Error signing in:", error)
         })
-})
+    }
+}
 
-googleSignOutButton.addEventListener("click", () => {
-    signOut(auth)
+function signOutFromApp() {
+    if (googleSignOutButton) {
+        signOut(auth)
         .then(() => {
             // User signed out successfully
             console.log("User signed out")
@@ -72,7 +81,8 @@ googleSignOutButton.addEventListener("click", () => {
             // Handle errors
             console.error("Error signing out:", error)
         })
-})
+    }
+}
 
 localStorage.setItem("movies", JSON.stringify(movies))
 
@@ -82,21 +92,24 @@ let moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
 function handleSearchButtonClick() {
 
     if (searchButton) {
-        const movieTitle = inputMovie.value
+        if (!inputMovie.value.trim()) {
+            alert("Please type in the title of the movie you want ❤️")
+            return
+        } else {
+            const movieTitle = inputMovie.value
 
-        fetch(`https://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
-            .then(response => response.json())
-            .then(data => {
-
-                // renderSearchResults(data.Search)
-
-                renderSearchResults(data)
-        } )
-        // .catch(err => {
-        //     initialStateMain.innerHTML = `
-        //     <h2>Unable to find what you’re looking for. Please try another search.</h2>`
-        // })
+            fetch(`https://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
+                .then(response => response.json())
+                .then(data => {
+                    renderSearchResults(data)
+            } )
+                // .catch((error) => {
+                //     console.error(error)
+                //     initialStateMain.innerHTML = `
+                //     <h2>Unable to find what you’re looking for. Please try another search.</h2>`
+                // })
     }
+        }
 }
 
 function renderSearchResults(movie) {
