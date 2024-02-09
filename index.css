@@ -187,6 +187,7 @@ li {
 }
 
 .thankyou-message {
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
     margin: 1.125rem;
@@ -291,6 +292,10 @@ button {
     .movie-plot {
         font-size: 1.125rem;
         font-weight: 300;
+    }
+
+    .thankyou-message {
+        font-size: 1.125rem;
     }
 
     /* Layout */
