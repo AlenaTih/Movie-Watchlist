@@ -150,6 +150,9 @@ function addToWatchList(movieId) {
     // Push the watchlist data item to the database
     push(movieDatainDB, movieObject)
 
+    // Make it so a movie can be added to a watchlist
+    // (and rendered afterwadrd) only once
+
     // Show thank you message
     thankYouEl.style.display = "flex"
     setTimeout( function() {
