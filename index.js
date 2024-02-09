@@ -7,10 +7,6 @@ const firebaseConfig = {
     apiKey: "AIzaSyChR30UHiZ4u-_t1mbqPfBTY0g57Smr_HA",
     authDomain: "realtime-database-67683.firebaseapp.com",
     databaseURL: "https://realtime-database-67683-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "realtime-database-67683",
-    storageBucket: "realtime-database-67683.appspot.com",
-    messagingSenderId: "372372469204",
-    appId: "1:372372469204:web:f348e41f2bb53d7aaa9241"
   }
 
   // Initialize Firebase
@@ -35,15 +31,10 @@ const thankYouEl = document.getElementById("thankyou-message")
 const googleSignInButton = document.getElementById("google-signin-button")
 const googleSignOutButton = document.getElementById("google-signout-button")
 
-let movies = []
-
 document.addEventListener("click", function(e) {
     if (e.target.id === "search-button") {
         e.preventDefault()
         handleSearchButtonClick()
-    } else if (e.target.dataset.add) {
-        e.preventDefault()
-        addToWatchList(e.target.dataset.add)
     } else if (e.target.dataset.remove) {
         removeFromWatchList(e.target.dataset.remove)
     } else if (e.target.id === "google-signin-button") {
@@ -84,10 +75,6 @@ function signOutFromApp() {
     }
 }
 
-localStorage.setItem("movies", JSON.stringify(movies))
-
-let moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
-
 
 function handleSearchButtonClick() {
 
@@ -97,6 +84,8 @@ function handleSearchButtonClick() {
             return
         } else {
             const movieTitle = inputMovie.value
+
+            // Search request with s
 
             fetch(`https://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
                 .then(response => response.json())
@@ -135,20 +124,19 @@ function renderSearchResults(movie) {
             </div>
         </div>`
 
-    moviesFromLocalStorage.push(movie)
-    localStorage.setItem("movies", JSON.stringify(moviesFromLocalStorage))
+    document.addEventListener("click", function(e) {
+        if (e.target.dataset.add) {
+            e.preventDefault()
+            addToWatchList(movie)
+        }
+    })
+
 }
 
-function addToWatchList(movieId) {
-
-    moviesFromLocalStorage = JSON.parse( localStorage.getItem("movies") )
-    
-    const movieObject = moviesFromLocalStorage.filter( function(movie) {
-        return movie.imdbID === movieId
-    })[0]
+function addToWatchList(movie) {
 
     // Push the watchlist data item to the database
-    push(movieDatainDB, movieObject)
+    push(movieDatainDB, movie)
 
     // Make it so a movie can be added to a watchlist
     // (and rendered afterwadrd) only once
@@ -166,6 +154,7 @@ function addToWatchList(movieId) {
             thankYouEl.style.display = "none"
         }, 1000)  // Hide after the fade-out effect completes
     }, 3000)
+
 }
 
 onValue(movieDatainDB, function(snapshot) {
