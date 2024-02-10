@@ -250,6 +250,12 @@ function addToWatchList(movie) {
     })
 }
 
+// Get the UID of the currently authenticated user
+const userId = auth.currentUser.uid
+
+// Reference to the user's watchlist node
+const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+
 // Event listener to render the watchlist when data changes
 onValue(userWatchlistRef, function(snapshot) {
     if (snapshot.exists()) {
@@ -263,12 +269,6 @@ onValue(userWatchlistRef, function(snapshot) {
 
 // for...in loop is a special kind of loop in JavaScript that is used
 // to iterate over properties (or keys) of an object
-
-// Get the UID of the currently authenticated user
-const userId = auth.currentUser.uid
-
-// Reference to the user's watchlist node
-const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
 // Function to render the watchlist
 function renderWatchlist(movie, key) {
