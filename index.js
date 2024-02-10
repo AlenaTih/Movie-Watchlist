@@ -218,18 +218,12 @@ function renderSearchResults(moviesArray) {
 //     })
 // }
 
-// Get the UID of the currently authenticated user
-const userId = auth.currentUser.uid
-
-// Reference to the user's watchlist node
-const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
-
 function addToWatchList(movie) {
-    // // Get the UID of the currently authenticated user
-    // const userId = auth.currentUser.uid
+    // Get the UID of the currently authenticated user
+    const userId = auth.currentUser.uid
 
-    // // Reference to the user's watchlist node
-    // const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+    // Reference to the user's watchlist node
+    const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
     // Check if the movie already exists in the user's watchlist
     onValue(userWatchlistRef, function(snapshot) {
@@ -256,17 +250,11 @@ function addToWatchList(movie) {
     })
 }
 
-
+// Event listener to render the watchlist when data changes
 onValue(userWatchlistRef, function(snapshot) {
     if (snapshot.exists()) {
-
+        watchListEl.innerHTML = "" // Clear previous watchlist items
         let movieObj = snapshot.val()
-
-        console.log(movieObj)
-
-        // let moviesArray = Object.entries(snapshot.val())
-        // console.log(moviesArray)
-        
         for (let key in movieObj) {
             renderWatchlist(movieObj[key], key)
         }
@@ -276,67 +264,40 @@ onValue(userWatchlistRef, function(snapshot) {
 // for...in loop is a special kind of loop in JavaScript that is used
 // to iterate over properties (or keys) of an object
 
-// function renderWatchlist(movie, key) {
+// Get the UID of the currently authenticated user
+const userId = auth.currentUser.uid
 
-//     if (initialStateList && watchListEl) {
-//         initialStateList.style.display = "none"
+// Reference to the user's watchlist node
+const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
-//         let newMovie = document.createElement("li")
-    
-//                 newMovie.innerHTML = `
-//                 <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
-//                     <img class="movie-poster" src="${movie.Poster}">
-//                     <div class="movie-details">
-//                         <div class="title-and-rating">
-//                             <h4 class="movie-title">${movie.Title}</h4>
-//                             <p class="movie-rating">${movie.Ratings[0].Value}</p>
-//                         </div>
-//                         <div class="about-movie">
-//                             <p class="movie-year">${movie.Year}</p>
-//                             <p class="movie-duration">${movie.Runtime}</p>
-//                             <p class="movie-genre">${movie.Genre}</p>
-//                             <image class="remove-button" data-remove="${key}"
-//                             src="images/remove-icon.png">
-//                         </div>
-//                         <p class="movie-plot">${movie.Plot}</p>
-//                     </div>
-//                 </div>`
-
-//                 watchListEl.prepend(newMovie)
-//         }
-// }
-
+// Function to render the watchlist
 function renderWatchlist(movie, key) {
-
     if (initialStateList && watchListEl) {
         initialStateList.style.display = "none"
 
         let newMovie = document.createElement("li")
-    
-                newMovie.innerHTML = `
-                    <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
-                        <img class="movie-poster" src="${movie.Poster}">
-                        <div class="movie-details">
-                            <div class="title-and-rating">
-                                <h4 class="movie-title">${movie.Title}</h4>
-                            </div>
-                            <div class="about-movie">
-                                <p class="movie-year">${movie.Year}</p>
-                                <image class="add-button" data-remove="${key}"
-                                src="images/remove-icon.png">
-                            </div>
-                        </div>
-                    </div>`
 
-                watchListEl.prepend(newMovie)
-        }
+        newMovie.innerHTML = `
+            <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
+                <img class="movie-poster" src="${movie.Poster}">
+                <div class="movie-details">
+                    <div class="title-and-rating">
+                        <h4 class="movie-title">${movie.Title}</h4>
+                    </div>
+                    <div class="about-movie">
+                        <p class="movie-year">${movie.Year}</p>
+                        <image class="add-button" data-remove="${key}"
+                        src="images/remove-icon.png">
+                    </div>
+                </div>
+            </div>`
+
+        watchListEl.prepend(newMovie)
+    }
 }
 
-
+// Function to remove a movie from the watchlist
 function removeFromWatchList(movieKey) {
-
-        let exactLocationOfItemInDB = ref(database, `MovieWatchlistData/${movieKey}`)
-        
-        remove(exactLocationOfItemInDB)
-
+    let exactLocationOfItemInDB = ref(database, `MovieWatchlistData/${userId}/${movieKey}`)
+    remove(exactLocationOfItemInDB)
 }
