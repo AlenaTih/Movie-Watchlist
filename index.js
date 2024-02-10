@@ -105,6 +105,8 @@ function renderWatchlistFromDatabase(userId) {
     })
 }
 
+// for...in loop is a special kind of loop in JavaScript that is used
+// to iterate over properties (or keys) of an object
 
 function signOutFromApp() {
     if (googleSignOutButton) {
@@ -189,55 +191,10 @@ function renderSearchResults(moviesArray) {
 
 }
 
-// function addToWatchList(movie) {
-//     // Check if the movie already exists in the watchlist
-//     const watchlistRef = ref(database, "MovieWatchlistData")
-//     let movieExists = false
-
-//     onValue(watchlistRef, function(snapshot) {
-//         if (snapshot.exists()) {
-//             const watchlist = snapshot.val()
-//             console.log(watchlist)
-//             for (const key in watchlist) {
-//                 if (watchlist[key].imdbID === movie.imdbID) {
-//                     movieExists = true
-//                     break
-//                 }
-//             }
-//         }
-
-//         if (!movieExists) {
-//             // Push the movie to the database if it doesn't already exist
-//             push(`${movieDatainDB}/${auth.user.uid}/${movie.imdbID}`, movie)
-
-//             // Show thank you message
-//             thankYouEl.style.display = "flex"
-//             setTimeout( function() {
-//                 thankYouEl.style.opacity = "1"
-//             }, 10)  // Slight delay to ensure the fade-in effect plays
-
-//             // Hide the thank you message after 3 seconds
-//             setTimeout( function() {
-//                 thankYouEl.style.opacity = "0"
-//                 setTimeout( function() {
-//                     thankYouEl.style.display = "none"
-//                 }, 1000)  // Hide after the fade-out effect completes
-//             }, 3000)
-//         } else {
-//             console.log("Movie already exists in watchlist")
-//         }
-//     })
-// }
-
 function addToWatchList(movie) {
     const user = JSON.parse(sessionStorage.getItem('user'))
 
     const userId = user.uid
-
-
-    // Get the UID of the currently authenticated user
-    // const userId = auth.user.uid
-    // let userId = newUser.uid
 
     // Reference to the user's watchlist node
     const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
@@ -266,28 +223,6 @@ function addToWatchList(movie) {
         }
     })
 }
-
-// Get the UID of the currently authenticated user
-// const userId = auth.user.uid
-// let userId = newUser.uid
-
-// // Reference to the user's watchlist node
-// let userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
-
-// // Event listener to render the watchlist when data changes
-// onValue(userWatchlistRef, function(snapshot) {
-//     if (snapshot.exists()) {
-//         // watchListEl.innerHTML = "" // Clear previous watchlist items
-//         let movieObj = snapshot.val()
-//         console.log(movieObj)
-//         for (let key in movieObj) {
-//             renderWatchlist(movieObj[key], key)
-//         }
-//     }
-// })
-
-// for...in loop is a special kind of loop in JavaScript that is used
-// to iterate over properties (or keys) of an object
 
 // Function to render the watchlist
 function renderWatchlist(movie, key) {
