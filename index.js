@@ -48,23 +48,62 @@ document.addEventListener("click", function(e) {
 
 let newUser = {}
 
+// function signInWithGoogle() {
+//     if (googleSignInButton) {
+//         const provider = new GoogleAuthProvider()
+//     signInWithPopup(auth, provider)
+//         .then((response) => {
+//             console.log(response)
+//             // User signed in successfully
+//             const user = response.user
+//             newUser = user
+//             console.log("User signed in:", user)
+//         })
+//         .catch((error) => {
+//             // Handle errors
+//             console.error("Error signing in:", error)
+//         })
+//     }
+// }
+
 function signInWithGoogle() {
     if (googleSignInButton) {
         const provider = new GoogleAuthProvider()
-    signInWithPopup(auth, provider)
-        .then((response) => {
-            console.log(response)
-            // User signed in successfully
-            const user = response.user
-            newUser = user
-            console.log("User signed in:", user)
-        })
-        .catch((error) => {
-            // Handle errors
-            console.error("Error signing in:", error)
-        })
+        signInWithPopup(auth, provider)
+            .then((response) => {
+                console.log(response)
+                // User signed in successfully
+                const user = response.user
+                newUser = user
+                console.log("User signed in:", user)
+
+                // After user signed in, render the watchlist
+                renderWatchlistFromDatabase(user.uid)
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error("Error signing in:", error)
+            })
     }
 }
+
+function renderWatchlistFromDatabase(userId) {
+    // Reference to the user's watchlist node
+    let userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+
+    // Event listener to render the watchlist when data changes
+    onValue(userWatchlistRef, function(snapshot) {
+        if (snapshot.exists()) {
+            watchListEl.innerHTML = "" // Clear previous watchlist items
+            let movieObj = snapshot.val()
+            console.log(movieObj)
+            for (let key in movieObj) {
+                renderWatchlist(movieObj[key], key)
+            }
+        }
+    })
+}
+
 
 function signOutFromApp() {
     if (googleSignOutButton) {
@@ -224,22 +263,22 @@ function addToWatchList(movie) {
 
 // Get the UID of the currently authenticated user
 // const userId = auth.user.uid
-let userId = newUser.uid
+// let userId = newUser.uid
 
-// Reference to the user's watchlist node
-let userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+// // Reference to the user's watchlist node
+// let userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
-// Event listener to render the watchlist when data changes
-onValue(userWatchlistRef, function(snapshot) {
-    if (snapshot.exists()) {
-        // watchListEl.innerHTML = "" // Clear previous watchlist items
-        let movieObj = snapshot.val()
-        console.log(movieObj)
-        for (let key in movieObj) {
-            renderWatchlist(movieObj[key], key)
-        }
-    }
-})
+// // Event listener to render the watchlist when data changes
+// onValue(userWatchlistRef, function(snapshot) {
+//     if (snapshot.exists()) {
+//         // watchListEl.innerHTML = "" // Clear previous watchlist items
+//         let movieObj = snapshot.val()
+//         console.log(movieObj)
+//         for (let key in movieObj) {
+//             renderWatchlist(movieObj[key], key)
+//         }
+//     }
+// })
 
 // for...in loop is a special kind of loop in JavaScript that is used
 // to iterate over properties (or keys) of an object
