@@ -31,6 +31,8 @@ const thankYouEl = document.getElementById("thankyou-message")
 const googleSignInButton = document.getElementById("google-signin-button")
 const googleSignOutButton = document.getElementById("google-signout-button")
 
+let newMoviesArray = []
+
 document.addEventListener("click", function(e) {
     if (e.target.id === "search-button") {
         e.preventDefault()
@@ -87,10 +89,12 @@ function handleSearchButtonClick() {
 
             // Search request with s
 
-            fetch(`https://www.omdbapi.com/?apikey=5f66aad6&t=${movieTitle}`)
+            fetch(`https://www.omdbapi.com/?apikey=5f66aad6&s=${movieTitle}`)
                 .then(response => response.json())
                 .then(data => {
-                    renderSearchResults(data)
+                    // console.log(data)
+                    // renderSearchResults(data)
+                    renderSearchResults(data.Search)
             } )
                 // .catch((error) => {
                 //     console.error(error)
@@ -101,66 +105,126 @@ function handleSearchButtonClick() {
         }
 }
 
-function renderSearchResults(movie) {
+// function renderSearchResults(movie) {
+
+//     initialStateMain.style.display = "none"
+
+//     searchResultsEl.innerHTML = `
+//         <div class="movie-result" data-movie="${movie.imdbID}">
+//             <img class="movie-poster" src="${movie.Poster}">
+//             <div class="movie-details">
+//                 <div class="title-and-rating">
+//                     <h4 class="movie-title">${movie.Title}</h4>
+//                     <p class="movie-rating">${movie.Ratings[0].Value}</p>
+//                 </div>
+//                 <div class="about-movie">
+//                     <p class="movie-year">${movie.Year}</p>
+//                     <p class="movie-duration">${movie.Runtime}</p>
+//                     <p class="movie-genre">${movie.Genre}</p>
+//                     <image class="add-button" data-add="${movie.imdbID}"
+//                     src="images/add-icon.png">
+//                 </div>
+//                 <p class="movie-plot">${movie.Plot}</p>
+//             </div>
+//         </div>`
+
+//     document.addEventListener("click", function(e) {
+//         if (e.target.dataset.add) {
+//             e.preventDefault()
+//             addToWatchList(movie)
+//         }
+//     })
+
+// }
+
+function renderSearchResults(moviesArray) {
 
     initialStateMain.style.display = "none"
 
-    searchResultsEl.innerHTML = `
-        <div class="movie-result" data-movie="${movie.imdbID}">
-            <img class="movie-poster" src="${movie.Poster}">
-            <div class="movie-details">
-                <div class="title-and-rating">
-                    <h4 class="movie-title">${movie.Title}</h4>
-                    <p class="movie-rating">${movie.Ratings[0].Value}</p>
+    let searchResultsHtml = ""
+
+    moviesArray.forEach( function(movie) {
+        searchResultsHtml += `
+            <div class="movie-result" data-movie="${movie.imdbID}">
+                <img class="movie-poster" src="${movie.Poster}">
+                <div class="movie-details">
+                    <div class="title-and-rating">
+                        <h4 class="movie-title">${movie.Title}</h4>
+                    </div>
+                    <div class="about-movie">
+                        <p class="movie-year">${movie.Year}</p>
+                        <image class="add-button" data-add="${movie.imdbID}"
+                        src="images/add-icon.png">
+                    </div>
                 </div>
-                <div class="about-movie">
-                    <p class="movie-year">${movie.Year}</p>
-                    <p class="movie-duration">${movie.Runtime}</p>
-                    <p class="movie-genre">${movie.Genre}</p>
-                    <image class="add-button" data-add="${movie.imdbID}"
-                    src="images/add-icon.png">
-                </div>
-                <p class="movie-plot">${movie.Plot}</p>
-            </div>
-        </div>`
+            </div>`
+
+            newMoviesArray.push(movie)
+    })
+
+    searchResultsEl.innerHTML = searchResultsHtml
 
     document.addEventListener("click", function(e) {
         if (e.target.dataset.add) {
             e.preventDefault()
-            addToWatchList(movie)
+
+            const chosenMovie = newMoviesArray.filter( function(movieItem) {
+                return movieItem.imdbID === e.target.dataset.add
+            })[0]
+
+            addToWatchList(chosenMovie)
         }
     })
 
 }
 
 function addToWatchList(movie) {
+    // Check if the movie already exists in the watchlist
+    const watchlistRef = ref(database, "MovieWatchlistData")
+    let movieExists = false
 
-    // Push the watchlist data item to the database
-    push(movieDatainDB, movie)
+    onValue(watchlistRef, function(snapshot) {
+        if (snapshot.exists()) {
+            const watchlist = snapshot.val()
+            for (const key in watchlist) {
+                if (watchlist[key].imdbID === movie.imdbID) {
+                    movieExists = true
+                    break
+                }
+            }
+        }
 
-    // Make it so a movie can be added to a watchlist
-    // (and rendered afterwadrd) only once
+        if (!movieExists) {
+            // Push the movie to the database if it doesn't already exist
+            push(movieDatainDB, movie)
 
-    // Show thank you message
-    thankYouEl.style.display = "flex"
-    setTimeout( function() {
-        thankYouEl.style.opacity = "1"
-    }, 10)  // Slight delay to ensure the fade-in effect plays
+            // Show thank you message
+            thankYouEl.style.display = "flex"
+            setTimeout( function() {
+                thankYouEl.style.opacity = "1"
+            }, 10)  // Slight delay to ensure the fade-in effect plays
 
-    // Hide the thank you message after 3 seconds
-    setTimeout( function() {
-        thankYouEl.style.opacity = "0"
-        setTimeout( function() {
-            thankYouEl.style.display = "none"
-        }, 1000)  // Hide after the fade-out effect completes
-    }, 3000)
-
+            // Hide the thank you message after 3 seconds
+            setTimeout( function() {
+                thankYouEl.style.opacity = "0"
+                setTimeout( function() {
+                    thankYouEl.style.display = "none"
+                }, 1000)  // Hide after the fade-out effect completes
+            }, 3000)
+        } else {
+            console.log("Movie already exists in watchlist")
+        }
+    })
 }
+
+
 
 onValue(movieDatainDB, function(snapshot) {
     if (snapshot.exists()) {
 
         let movieObj = snapshot.val()
+
+        console.log(movieObj)
 
         // let moviesArray = Object.entries(snapshot.val())
         // console.log(moviesArray)
@@ -174,6 +238,36 @@ onValue(movieDatainDB, function(snapshot) {
 // for...in loop is a special kind of loop in JavaScript that is used
 // to iterate over properties (or keys) of an object
 
+// function renderWatchlist(movie, key) {
+
+//     if (initialStateList && watchListEl) {
+//         initialStateList.style.display = "none"
+
+//         let newMovie = document.createElement("li")
+    
+//                 newMovie.innerHTML = `
+//                 <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
+//                     <img class="movie-poster" src="${movie.Poster}">
+//                     <div class="movie-details">
+//                         <div class="title-and-rating">
+//                             <h4 class="movie-title">${movie.Title}</h4>
+//                             <p class="movie-rating">${movie.Ratings[0].Value}</p>
+//                         </div>
+//                         <div class="about-movie">
+//                             <p class="movie-year">${movie.Year}</p>
+//                             <p class="movie-duration">${movie.Runtime}</p>
+//                             <p class="movie-genre">${movie.Genre}</p>
+//                             <image class="remove-button" data-remove="${key}"
+//                             src="images/remove-icon.png">
+//                         </div>
+//                         <p class="movie-plot">${movie.Plot}</p>
+//                     </div>
+//                 </div>`
+
+//                 watchListEl.prepend(newMovie)
+//         }
+// }
+
 function renderWatchlist(movie, key) {
 
     if (initialStateList && watchListEl) {
@@ -182,27 +276,24 @@ function renderWatchlist(movie, key) {
         let newMovie = document.createElement("li")
     
                 newMovie.innerHTML = `
-                <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
-                    <img class="movie-poster" src="${movie.Poster}">
-                    <div class="movie-details">
-                        <div class="title-and-rating">
-                            <h4 class="movie-title">${movie.Title}</h4>
-                            <p class="movie-rating">${movie.Ratings[0].Value}</p>
+                    <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
+                        <img class="movie-poster" src="${movie.Poster}">
+                        <div class="movie-details">
+                            <div class="title-and-rating">
+                                <h4 class="movie-title">${movie.Title}</h4>
+                            </div>
+                            <div class="about-movie">
+                                <p class="movie-year">${movie.Year}</p>
+                                <image class="add-button" data-remove="${key}"
+                                src="images/remove-icon.png">
+                            </div>
                         </div>
-                        <div class="about-movie">
-                            <p class="movie-year">${movie.Year}</p>
-                            <p class="movie-duration">${movie.Runtime}</p>
-                            <p class="movie-genre">${movie.Genre}</p>
-                            <image class="remove-button" data-remove="${key}"
-                            src="images/remove-icon.png">
-                        </div>
-                        <p class="movie-plot">${movie.Plot}</p>
-                    </div>
-                </div>`
+                    </div>`
 
                 watchListEl.prepend(newMovie)
         }
 }
+
 
 function removeFromWatchList(movieKey) {
 

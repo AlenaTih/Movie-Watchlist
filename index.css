@@ -337,9 +337,14 @@ button {
         max-width: 40%;
     }
 
-    .add-button,
+    /* .add-button,
     .remove-button {
         max-width: 5%;
+    } */
+
+    .add-button,
+    .remove-button {
+        max-width: 20px;
     }
 
     /* Links */
