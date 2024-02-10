@@ -46,6 +46,8 @@ document.addEventListener("click", function(e) {
     }
 })
 
+let newUser = {}
+
 function signInWithGoogle() {
     if (googleSignInButton) {
         const provider = new GoogleAuthProvider()
@@ -54,6 +56,7 @@ function signInWithGoogle() {
             console.log(response)
             // User signed in successfully
             const user = response.user
+            newUser = user
             console.log("User signed in:", user)
         })
         .catch((error) => {
@@ -188,7 +191,8 @@ function renderSearchResults(moviesArray) {
 
 function addToWatchList(movie) {
     // Get the UID of the currently authenticated user
-    const userId = auth.user.uid
+    // const userId = auth.user.uid
+    let userId = newUser.uid
 
     // Reference to the user's watchlist node
     const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
@@ -219,10 +223,11 @@ function addToWatchList(movie) {
 }
 
 // Get the UID of the currently authenticated user
-const userId = auth.user.uid
+// const userId = auth.user.uid
+let userId = newUser.uid
 
 // Reference to the user's watchlist node
-const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+let userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
 // Event listener to render the watchlist when data changes
 onValue(userWatchlistRef, function(snapshot) {
