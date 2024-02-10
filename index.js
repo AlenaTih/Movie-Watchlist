@@ -98,7 +98,7 @@ function renderWatchlistFromDatabase(userId) {
             let movieObj = snapshot.val()
             console.log(movieObj)
             for (let key in movieObj) {
-                renderWatchlist(movieObj[key], key)
+                renderWatchlist(movieObj[key].userId, key)
             }
         }
     })
