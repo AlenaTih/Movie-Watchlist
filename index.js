@@ -230,9 +230,14 @@ function renderSearchResults(moviesArray) {
 // }
 
 function addToWatchList(movie) {
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
+    const userId = user.uid
+
+
     // Get the UID of the currently authenticated user
     // const userId = auth.user.uid
-    let userId = newUser.uid
+    // let userId = newUser.uid
 
     // Reference to the user's watchlist node
     const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
@@ -315,7 +320,7 @@ function removeFromWatchList(movieKey) {
     const user = JSON.parse(sessionStorage.getItem('user'))
 
     const userId = user.uid
-    
+
     let exactLocationOfItemInDB = ref(database, `MovieWatchlistData/${userId}/${movieKey}`)
     remove(exactLocationOfItemInDB)
 }
