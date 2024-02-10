@@ -218,12 +218,18 @@ function renderSearchResults(moviesArray) {
 //     })
 // }
 
-function addToWatchList(movie) {
-    // Get the UID of the currently authenticated user
-    const userId = auth.currentUser.uid
+// Get the UID of the currently authenticated user
+const userId = auth.currentUser.uid
 
-    // Reference to the user's watchlist node
-    const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+// Reference to the user's watchlist node
+const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+
+function addToWatchList(movie) {
+    // // Get the UID of the currently authenticated user
+    // const userId = auth.currentUser.uid
+
+    // // Reference to the user's watchlist node
+    // const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
     // Check if the movie already exists in the user's watchlist
     onValue(userWatchlistRef, function(snapshot) {
@@ -251,7 +257,7 @@ function addToWatchList(movie) {
 }
 
 
-onValue(movieDatainDB, function(snapshot) {
+onValue(userWatchlistRef, function(snapshot) {
     if (snapshot.exists()) {
 
         let movieObj = snapshot.val()
