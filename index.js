@@ -105,38 +105,6 @@ function handleSearchButtonClick() {
         }
 }
 
-// function renderSearchResults(movie) {
-
-//     initialStateMain.style.display = "none"
-
-//     searchResultsEl.innerHTML = `
-//         <div class="movie-result" data-movie="${movie.imdbID}">
-//             <img class="movie-poster" src="${movie.Poster}">
-//             <div class="movie-details">
-//                 <div class="title-and-rating">
-//                     <h4 class="movie-title">${movie.Title}</h4>
-//                     <p class="movie-rating">${movie.Ratings[0].Value}</p>
-//                 </div>
-//                 <div class="about-movie">
-//                     <p class="movie-year">${movie.Year}</p>
-//                     <p class="movie-duration">${movie.Runtime}</p>
-//                     <p class="movie-genre">${movie.Genre}</p>
-//                     <image class="add-button" data-add="${movie.imdbID}"
-//                     src="images/add-icon.png">
-//                 </div>
-//                 <p class="movie-plot">${movie.Plot}</p>
-//             </div>
-//         </div>`
-
-//     document.addEventListener("click", function(e) {
-//         if (e.target.dataset.add) {
-//             e.preventDefault()
-//             addToWatchList(movie)
-//         }
-//     })
-
-// }
-
 function renderSearchResults(moviesArray) {
 
     initialStateMain.style.display = "none"
@@ -220,7 +188,7 @@ function renderSearchResults(moviesArray) {
 
 function addToWatchList(movie) {
     // Get the UID of the currently authenticated user
-    const userId = auth.currentUser.uid
+    const userId = auth.user.uid
 
     // Reference to the user's watchlist node
     const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
@@ -251,7 +219,7 @@ function addToWatchList(movie) {
 }
 
 // Get the UID of the currently authenticated user
-const userId = auth.currentUser.uid
+const userId = auth.user.uid
 
 // Reference to the user's watchlist node
 const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
