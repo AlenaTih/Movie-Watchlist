@@ -178,26 +178,58 @@ function renderSearchResults(moviesArray) {
 
 }
 
+// function addToWatchList(movie) {
+//     // Check if the movie already exists in the watchlist
+//     const watchlistRef = ref(database, "MovieWatchlistData")
+//     let movieExists = false
+
+//     onValue(watchlistRef, function(snapshot) {
+//         if (snapshot.exists()) {
+//             const watchlist = snapshot.val()
+//             console.log(watchlist)
+//             for (const key in watchlist) {
+//                 if (watchlist[key].imdbID === movie.imdbID) {
+//                     movieExists = true
+//                     break
+//                 }
+//             }
+//         }
+
+//         if (!movieExists) {
+//             // Push the movie to the database if it doesn't already exist
+//             push(`${movieDatainDB}/${auth.user.uid}/${movie.imdbID}`, movie)
+
+//             // Show thank you message
+//             thankYouEl.style.display = "flex"
+//             setTimeout( function() {
+//                 thankYouEl.style.opacity = "1"
+//             }, 10)  // Slight delay to ensure the fade-in effect plays
+
+//             // Hide the thank you message after 3 seconds
+//             setTimeout( function() {
+//                 thankYouEl.style.opacity = "0"
+//                 setTimeout( function() {
+//                     thankYouEl.style.display = "none"
+//                 }, 1000)  // Hide after the fade-out effect completes
+//             }, 3000)
+//         } else {
+//             console.log("Movie already exists in watchlist")
+//         }
+//     })
+// }
+
 function addToWatchList(movie) {
-    // Check if the movie already exists in the watchlist
-    const watchlistRef = ref(database, "MovieWatchlistData")
-    let movieExists = false
+    // Get the UID of the currently authenticated user
+    const userId = auth.currentUser.uid
 
-    onValue(watchlistRef, function(snapshot) {
-        if (snapshot.exists()) {
-            const watchlist = snapshot.val()
-            console.log(watchlist)
-            for (const key in watchlist) {
-                if (watchlist[key].imdbID === movie.imdbID) {
-                    movieExists = true
-                    break
-                }
-            }
-        }
+    // Reference to the user's watchlist node
+    const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
-        if (!movieExists) {
-            // Push the movie to the database if it doesn't already exist
-            push(`${movieDatainDB}/${auth.user.uid}/${movie.imdbID}`, movie)
+    // Check if the movie already exists in the user's watchlist
+    onValue(userWatchlistRef, function(snapshot) {
+        if (!snapshot.exists() || !Object.values(snapshot.val()).some((item) => item.imdbID === movie.imdbID)) {
+            // Push the movie to the user's watchlist node
+            push(userWatchlistRef, movie)
 
             // Show thank you message
             thankYouEl.style.display = "flex"
@@ -213,11 +245,10 @@ function addToWatchList(movie) {
                 }, 1000)  // Hide after the fade-out effect completes
             }, 3000)
         } else {
-            console.log("Movie already exists in watchlist")
+            console.log("Movie already exists in the watchlist")
         }
     })
 }
-
 
 
 onValue(movieDatainDB, function(snapshot) {
