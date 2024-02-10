@@ -196,7 +196,7 @@ function addToWatchList(movie) {
 
         if (!movieExists) {
             // Push the movie to the database if it doesn't already exist
-            push(movieDatainDB, movie)
+            push(`${movieDatainDB}/${auth.user.uid}/${movie.imdbID}`, movie)
 
             // Show thank you message
             thankYouEl.style.display = "flex"
