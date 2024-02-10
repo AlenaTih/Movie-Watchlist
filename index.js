@@ -186,6 +186,7 @@ function addToWatchList(movie) {
     onValue(watchlistRef, function(snapshot) {
         if (snapshot.exists()) {
             const watchlist = snapshot.val()
+            console.log(watchlist)
             for (const key in watchlist) {
                 if (watchlist[key].imdbID === movie.imdbID) {
                     movieExists = true
