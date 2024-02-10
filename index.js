@@ -312,6 +312,10 @@ function renderWatchlist(movie, key) {
 
 // Function to remove a movie from the watchlist
 function removeFromWatchList(movieKey) {
+    const user = JSON.parse(sessionStorage.getItem('user'))
+
+    const userId = user.uid
+    
     let exactLocationOfItemInDB = ref(database, `MovieWatchlistData/${userId}/${movieKey}`)
     remove(exactLocationOfItemInDB)
 }
