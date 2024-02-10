@@ -48,24 +48,7 @@ document.addEventListener("click", function(e) {
 
 let newUser = {}
 
-// function signInWithGoogle() {
-//     if (googleSignInButton) {
-//         const provider = new GoogleAuthProvider()
-//     signInWithPopup(auth, provider)
-//         .then((response) => {
-//             console.log(response)
-//             // User signed in successfully
-//             const user = response.user
-//             newUser = user
-//             console.log("User signed in:", user)
-//         })
-//         .catch((error) => {
-//             // Handle errors
-//             console.error("Error signing in:", error)
-//         })
-//     }
-// }
-
+// Function to handle sign-in
 function signInWithGoogle() {
     if (googleSignInButton) {
         const provider = new GoogleAuthProvider()
@@ -77,6 +60,9 @@ function signInWithGoogle() {
                 newUser = user
                 console.log("User signed in:", user)
 
+                // Store user information in session storage
+                sessionStorage.setItem('user', JSON.stringify(user))
+
                 // After user signed in, render the watchlist
                 renderWatchlistFromDatabase(user.uid)
             })
@@ -86,6 +72,21 @@ function signInWithGoogle() {
             })
     }
 }
+
+// Function to check if user is already authenticated
+function checkAuthentication() {
+    const user = JSON.parse(sessionStorage.getItem('user'))
+    if (user) {
+        // User is authenticated, render watchlist
+        renderWatchlistFromDatabase(user.uid)
+    } else {
+        // User is not authenticated, handle accordingly (e.g., redirect to login page)
+    }
+}
+
+// Call checkAuthentication when the page loads
+window.addEventListener('load', checkAuthentication)
+
 
 function renderWatchlistFromDatabase(userId) {
     // Reference to the user's watchlist node
@@ -98,7 +99,7 @@ function renderWatchlistFromDatabase(userId) {
             let movieObj = snapshot.val()
             console.log(movieObj)
             for (let key in movieObj) {
-                renderWatchlist(movieObj[key].userId, key)
+                renderWatchlist(movieObj[key], key)
             }
         }
     })
