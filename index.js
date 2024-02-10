@@ -94,7 +94,7 @@ function renderWatchlistFromDatabase(userId) {
     // Event listener to render the watchlist when data changes
     onValue(userWatchlistRef, function(snapshot) {
         if (snapshot.exists()) {
-            watchListEl.innerHTML = "" // Clear previous watchlist items
+            // watchListEl.innerHTML = "" // Clear previous watchlist items
             let movieObj = snapshot.val()
             console.log(movieObj)
             for (let key in movieObj) {
