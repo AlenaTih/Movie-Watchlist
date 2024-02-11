@@ -149,10 +149,10 @@ header {
 .movie-result-watchlist {
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 1.125rem;
     width: 100%;
-    /* margin: 0 auto; */
+    margin: 0 auto;
     padding: 1.25rem 0;
     border-bottom: 1px solid #2C2C2C;
 }
