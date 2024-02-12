@@ -179,7 +179,7 @@ function renderSearchResults(moviesArray) {
                         <div class="movie-details">
                             <div class="title-and-rating">
                                 <h4 class="movie-title">${fullMovie.Title}</h4>
-                                <p class="movie-rating">${fullMovie.imdbRating}</p>
+                                <i class="star fa-solid fa-star"></i><p class="movie-rating">${fullMovie.imdbRating}</p>
                             </div>
                             <div class="about-movie">
                                 <p class="movie-year">${fullMovie.Year}</p>
@@ -249,32 +249,6 @@ function addToWatchList(movie) {
     })
 }
 
-// Function to render the watchlist
-// function renderWatchlist(movie, key) {
-//     if (initialStateList && watchListEl) {
-//         initialStateList.style.display = "none"
-
-//         let newMovie = document.createElement("li")
-
-//         newMovie.innerHTML = `
-//             <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
-//                 <img class="movie-poster" src="${movie.Poster}">
-//                 <div class="movie-details">
-//                     <div class="title-and-rating">
-//                         <h4 class="movie-title">${movie.Title}</h4>
-//                     </div>
-//                     <div class="about-movie">
-//                         <p class="movie-year">${movie.Year}</p>
-//                         <image class="add-button" data-remove="${key}"
-//                         src="images/remove-icon.png">
-//                     </div>
-//                 </div>
-//             </div>`
-
-//         watchListEl.prepend(newMovie)
-//     }
-// }
-
 function renderWatchlist(movie, key) {
     if (initialStateList && watchListEl) {
         initialStateList.style.display = "none"
@@ -287,7 +261,7 @@ function renderWatchlist(movie, key) {
                 <div class="movie-details">
                     <div class="title-and-rating">
                         <h4 class="movie-title">${movie.Title}</h4>
-                        <p class="movie-rating">${movie.imdbRating}</p>
+                        <i class="star fa-solid fa-star"></i><p class="movie-rating">${movie.imdbRating}</p>
                     </div>
                     <div class="about-movie">
                         <p class="movie-year">${movie.Year}</p>
@@ -304,7 +278,6 @@ function renderWatchlist(movie, key) {
     }
 }
 
-// Function to remove a movie from the watchlist
 function removeFromWatchList(movieKey) {
     const user = JSON.parse(sessionStorage.getItem('user'))
 
