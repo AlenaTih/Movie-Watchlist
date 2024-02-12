@@ -12,7 +12,7 @@ const firebaseConfig = {
   // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
-const movieDatainDB = ref(database, "MovieWatchlistData")
+// const movieDatainDB = ref(database, "MovieWatchlistData")
 
 // Initialize Firebase Auth
 const auth = getAuth()
@@ -47,8 +47,6 @@ document.addEventListener("click", function(e) {
     }
 })
 
-let newUser = {}
-
 // Function to handle sign-in
 function signInWithGoogle() {
     if (googleSignInButton) {
@@ -58,7 +56,6 @@ function signInWithGoogle() {
                 console.log(response)
                 // User signed in successfully
                 const user = response.user
-                newUser = user
                 console.log("User signed in:", user)
 
                 // Store user information in session storage
