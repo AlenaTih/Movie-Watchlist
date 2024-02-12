@@ -220,6 +220,8 @@ function addToWatchList(movie) {
             // Push the movie to the user's watchlist node
             push(userWatchlistRef, movie)
 
+            alert("This movie was added to your watchlist! ❤️")
+
             // Show thank you message
             thankYouEl.style.display = "flex"
             setTimeout( function() {
