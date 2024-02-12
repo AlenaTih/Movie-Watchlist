@@ -134,8 +134,6 @@ function handleSearchButtonClick() {
         } else {
             const movieTitle = inputMovie.value
 
-            // Search request with s
-
             fetch(`https://www.omdbapi.com/?apikey=5f66aad6&s=${movieTitle}`)
                 .then(response => response.json())
                 .then(data => {
