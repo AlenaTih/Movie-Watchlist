@@ -25,6 +25,7 @@ This is a little but cute web app that allows you to search for movies and add t
 - JavaScript
 - Firebase Realtime Database
 - The OMDb API
+- Font Awesome CDN
 
 ## API
 
