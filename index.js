@@ -28,6 +28,7 @@ const initialStateList = document.getElementById("initial-state-list")
 
 const thankYouEl = document.getElementById("thankyou-message")
 
+const authEl = document.getElementById("auth")
 const googleSignInButton = document.getElementById("google-signin-button")
 const googleSignOutButton = document.getElementById("google-signout-button")
 
@@ -79,8 +80,12 @@ function checkAuthentication() {
     if (user) {
         // User is authenticated, render watchlist
         renderWatchlistFromDatabase(user.uid)
+        googleSignInButton.style.display = "none"
+        googleSignOutButton.style.display = "block"
     } else {
         // User is not authenticated, handle accordingly (e.g., redirect to login page)
+        googleSignInButton.style.display = "block"
+        googleSignOutButton.style.display = "none"
     }
 }
 
