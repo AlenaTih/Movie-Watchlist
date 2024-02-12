@@ -169,25 +169,42 @@ function renderSearchResults(moviesArray) {
     let searchResultsHtml = ""
 
     moviesArray.forEach( function(movie) {
-        searchResultsHtml += `
-            <div class="movie-result" data-movie="${movie.imdbID}">
-                <img class="movie-poster" src="${movie.Poster}">
-                <div class="movie-details">
-                    <div class="title-and-rating">
-                        <h4 class="movie-title">${movie.Title}</h4>
-                    </div>
-                    <div class="about-movie">
-                        <p class="movie-year">${movie.Year}</p>
-                        <image class="add-button" data-add="${movie.imdbID}"
-                        src="images/add-icon.png">
-                    </div>
-                </div>
-            </div>`
+        // Fetch additional details for each movie using its imdbID
+        fetch(`https://www.omdbapi.com/?apikey=5f66aad6&i=${movie.imdbID}`)
+            .then(response => response.json())
+            .then(movieDetails => {
+                // Combine the fetched details with the original movie object
+                const fullMovie = { ...movie, ...movieDetails }
 
-            newMoviesArray.push(movie)
+                searchResultsHtml += `
+                    <div class="movie-result" data-movie="${fullMovie.imdbID}">
+                        <img class="movie-poster" src="${fullMovie.Poster}">
+                        <div class="movie-details">
+                            <div class="title-and-rating">
+                                <h4 class="movie-title">${fullMovie.Title}</h4>
+                                <p class="movie-rating">${fullMovie.imdbRating}</p>
+                            </div>
+                            <div class="about-movie">
+                                <p class="movie-year">${fullMovie.Year}</p>
+                                <p class="movie-genre">${fullMovie.Genre}</p>
+                                <p class="movie-duration">${fullMovie.Runtime}</p>
+                                <img class="add-button" data-add="${fullMovie.imdbID}"
+                                    src="images/add-icon.png">
+                            </div>
+                            <p class="movie-plot">${fullMovie.Plot}</p>
+                        </div>
+                    </div>`
+
+                // Push the full movie object to the array
+                newMoviesArray.push(fullMovie)
+
+                // Update the search results HTML
+                searchResultsEl.innerHTML = searchResultsHtml
+            })
+            .catch(error => console.error(error))
     })
 
-    searchResultsEl.innerHTML = searchResultsHtml
+    // searchResultsEl.innerHTML = searchResultsHtml
 
     document.addEventListener("click", function(e) {
         if (e.target.dataset.add) {
@@ -240,6 +257,31 @@ function addToWatchList(movie) {
 }
 
 // Function to render the watchlist
+// function renderWatchlist(movie, key) {
+//     if (initialStateList && watchListEl) {
+//         initialStateList.style.display = "none"
+
+//         let newMovie = document.createElement("li")
+
+//         newMovie.innerHTML = `
+//             <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
+//                 <img class="movie-poster" src="${movie.Poster}">
+//                 <div class="movie-details">
+//                     <div class="title-and-rating">
+//                         <h4 class="movie-title">${movie.Title}</h4>
+//                     </div>
+//                     <div class="about-movie">
+//                         <p class="movie-year">${movie.Year}</p>
+//                         <image class="add-button" data-remove="${key}"
+//                         src="images/remove-icon.png">
+//                     </div>
+//                 </div>
+//             </div>`
+
+//         watchListEl.prepend(newMovie)
+//     }
+// }
+
 function renderWatchlist(movie, key) {
     if (initialStateList && watchListEl) {
         initialStateList.style.display = "none"
@@ -247,17 +289,21 @@ function renderWatchlist(movie, key) {
         let newMovie = document.createElement("li")
 
         newMovie.innerHTML = `
-            <div class="movie-result-watchlist" data-movie="${movie.imdbID}">
+            <div class="movie-result" data-movie="${movie.imdbID}">
                 <img class="movie-poster" src="${movie.Poster}">
                 <div class="movie-details">
                     <div class="title-and-rating">
                         <h4 class="movie-title">${movie.Title}</h4>
+                        <p class="movie-rating">${movie.imdbRating}</p>
                     </div>
                     <div class="about-movie">
                         <p class="movie-year">${movie.Year}</p>
-                        <image class="add-button" data-remove="${key}"
-                        src="images/remove-icon.png">
+                        <p class="movie-genre">${movie.Genre}</p>
+                        <p class="movie-duration">${movie.Runtime}</p>
+                        <img class="add-button" data-remove="${key}"
+                            src="images/remove-icon.png">
                     </div>
+                    <p class="movie-plot">${movie.Plot}</p>
                 </div>
             </div>`
 
