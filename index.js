@@ -217,7 +217,7 @@ function addToWatchList(movie) {
             // Push the movie to the user's watchlist node
             push(userWatchlistRef, movie)
 
-            alert("This movie was added to your watchlist! ❤️")
+            // alert("This movie was added to your watchlist! ❤️")
 
             // Show thank you message
             thankYouEl.style.display = "flex"
@@ -234,7 +234,7 @@ function addToWatchList(movie) {
             }, 3000)
         } else {
                 console.log("Movie already exists in the watchlist")
-                // alert("This movie is already in your watchlist 🤩")
+                alert("This movie is already in your watchlist 🤩")
         }
     })
 }
