@@ -66,6 +66,8 @@ function signInWithGoogle() {
 
                 // After user signed in, render the watchlist
                 renderWatchlistFromDatabase(user.uid)
+
+                checkAuthentication()
             })
             .catch((error) => {
                 // Handle errors
@@ -125,6 +127,8 @@ function signOutFromApp() {
         .then(() => {
             // User signed out successfully
             console.log("User signed out")
+
+            checkAuthentication()
         })
         .catch((error) => {
             // Handle errors
