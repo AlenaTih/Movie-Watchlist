@@ -233,8 +233,10 @@ function addToWatchList(movie) {
                 }, 1000)  // Hide after the fade-out effect completes
             }, 3000)
         } else {
-            console.log("Movie already exists in the watchlist")
-            alert("This movie is already in your watchlist 🤩")
+            if (!snapshot.exists()) {
+                console.log("Movie already exists in the watchlist")
+                alert("This movie is already in your watchlist 🤩")
+            }
         }
     })
 }
