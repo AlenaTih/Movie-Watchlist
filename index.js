@@ -107,7 +107,6 @@ function renderWatchlistFromDatabase(userId) {
                 watchListEl.innerHTML = "" // Clear previous watchlist items
             }
             let movieObj = snapshot.val()
-            console.log(movieObj)
             for (let key in movieObj) {
                 renderWatchlist(movieObj[key], key)
             }
@@ -149,15 +148,13 @@ function handleSearchButtonClick() {
             fetch(`https://www.omdbapi.com/?apikey=5f66aad6&s=${movieTitle}`)
                 .then(response => response.json())
                 .then(data => {
-                    // console.log(data)
-                    // renderSearchResults(data)
                     renderSearchResults(data.Search)
             } )
-                // .catch((error) => {
-                //     console.error(error)
-                //     initialStateMain.innerHTML = `
-                //     <h2>Unable to find what you’re looking for. Please try another search.</h2>`
-                // })
+                .catch(error => {
+                    console.error(error)
+                    initialStateMain.innerHTML = `
+                    <h2>Unable to find what you’re looking for. Please try another search.</h2>`
+                })
     }
         }
 }
@@ -195,16 +192,12 @@ function renderSearchResults(moviesArray) {
                         </div>
                     </div>`
 
-                // Push the full movie object to the array
                 newMoviesArray.push(fullMovie)
 
-                // Update the search results HTML
                 searchResultsEl.innerHTML = searchResultsHtml
             })
             .catch(error => console.error(error))
     })
-
-    // searchResultsEl.innerHTML = searchResultsHtml
 
     document.addEventListener("click", function(e) {
         if (e.target.dataset.add) {
