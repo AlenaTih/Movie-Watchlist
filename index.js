@@ -129,6 +129,8 @@ function signOutFromApp() {
             console.log("User signed out")
 
             checkAuthentication()
+
+            sessionStorage.user.clear()
         })
         .catch((error) => {
             // Handle errors
