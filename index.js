@@ -237,6 +237,7 @@ function addToWatchList(movie) {
             }, 3000)
         } else {
             console.log("Movie already exists in the watchlist")
+            alert("This movie is already in your watchlist 🤩")
         }
     })
 }
