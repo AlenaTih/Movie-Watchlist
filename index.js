@@ -80,12 +80,16 @@ function checkAuthentication() {
     if (user) {
         // User is authenticated, render watchlist
         renderWatchlistFromDatabase(user.uid)
-        googleSignInButton.style.display = "none"
-        googleSignOutButton.style.display = "block"
+        if (authEl) {
+            googleSignInButton.style.display = "none"
+            googleSignOutButton.style.display = "block"
+        }
     } else {
         // User is not authenticated, handle accordingly (e.g., redirect to login page)
-        googleSignInButton.style.display = "block"
-        googleSignOutButton.style.display = "none"
+        if (authEl) {
+            googleSignInButton.style.display = "block"
+            googleSignOutButton.style.display = "none"
+        }
     }
 }
 
