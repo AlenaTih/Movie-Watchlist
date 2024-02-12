@@ -130,7 +130,7 @@ function signOutFromApp() {
 
             checkAuthentication()
 
-            sessionStorage.user.clear()
+            sessionStorage.clear()
         })
         .catch((error) => {
             // Handle errors
