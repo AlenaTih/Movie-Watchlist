@@ -214,39 +214,43 @@ function renderSearchResults(moviesArray) {
 }
 
 function addToWatchList(movie) {
+
     const user = JSON.parse(sessionStorage.getItem('user'))
 
-    const userId = user.uid
+    if (user) {
+        const userId = user.uid
 
-    // Reference to the user's watchlist node
-    const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
+        // Reference to the user's watchlist node
+        const userWatchlistRef = ref(database, `MovieWatchlistData/${userId}`)
 
-    // Check if the movie already exists in the user's watchlist
-    onValue(userWatchlistRef, function(snapshot) {
-        if (!snapshot.exists() || !Object.values(snapshot.val()).some((item) => item.imdbID === movie.imdbID)) {
-            // Push the movie to the user's watchlist node
-            push(userWatchlistRef, movie)
+        // Check if the movie already exists in the user's watchlist
+        onValue(userWatchlistRef, function(snapshot) {
+            if (!snapshot.exists() || !Object.values(snapshot.val()).some((item) => item.imdbID === movie.imdbID)) {
+                // Push the movie to the user's watchlist node
+                push(userWatchlistRef, movie)
 
-            // alert("This movie was added to your watchlist! ❤️")
+                // alert("This movie was added to your watchlist! ❤️")
 
-            // Show thank you message
-            thankYouEl.style.display = "flex"
-            setTimeout( function() {
-                thankYouEl.style.opacity = "1"
-            }, 10)  // Slight delay to ensure the fade-in effect plays
-
-            // Hide the thank you message after 3 seconds
-            setTimeout( function() {
-                thankYouEl.style.opacity = "0"
+                // Show thank you message
+                thankYouEl.style.display = "flex"
                 setTimeout( function() {
-                    thankYouEl.style.display = "none"
-                }, 1000)  // Hide after the fade-out effect completes
-            }, 3000)
-        } else {
-                console.log("Movie already exists in the watchlist")
-                alert("This movie is already in your watchlist 🤩")
-        }
+                    thankYouEl.style.opacity = "1"
+                }, 10)  // Slight delay to ensure the fade-in effect plays
+
+                // Hide the thank you message after 3 seconds
+                setTimeout( function() {
+                    thankYouEl.style.opacity = "0"
+                    setTimeout( function() {
+                        thankYouEl.style.display = "none"
+                    }, 1000)  // Hide after the fade-out effect completes
+                }, 3000)
+            } else {
+                    alert("This movie is already in your watchlist 🤩")
+            }
     })
+    } else {
+        alert("Please sign in to add movies ❤️")
+    }
 }
 
 function renderWatchlist(movie, key) {

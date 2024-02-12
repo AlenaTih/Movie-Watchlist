@@ -218,6 +218,7 @@ button {
 
 .google-signin-button,
 .google-signout-button {
+    font-size: 1rem;
     display: block;
     font-family: inherit;
     color: whitesmoke;
