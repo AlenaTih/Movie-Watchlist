@@ -200,6 +200,12 @@ li {
     transition: opacity 1s; /* Smooth fade-in effect */
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* Buttons */
 
 button {

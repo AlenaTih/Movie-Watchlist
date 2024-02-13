@@ -84,7 +84,7 @@ function checkAuthentication() {
             googleSignOutButton.style.display = "block"
         }
     } else {
-        // User is not authenticated, handle accordingly (e.g., redirect to login page)
+        // User is not authenticated, handle accordingly
         if (authEl) {
             googleSignInButton.style.display = "block"
             googleSignOutButton.style.display = "none"
