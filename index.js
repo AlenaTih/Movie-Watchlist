@@ -32,6 +32,8 @@ const authEl = document.getElementById("auth")
 const googleSignInButton = document.getElementById("google-signin-button")
 const googleSignOutButton = document.getElementById("google-signout-button")
 
+const loader = document.getElementById("loader")
+
 let newMoviesArray = []
 
 document.addEventListener("click", function(e) {
@@ -138,9 +140,12 @@ function signOutFromApp() {
 
 function handleSearchButtonClick() {
 
+    loader.style.display = "block"
+
     if (searchButton) {
         if (!inputMovie.value.trim()) {
             alert("Please type in the title of the movie you want ❤️")
+            loader.style.display = "none"
             return
         } else {
             const movieTitle = inputMovie.value
@@ -149,9 +154,11 @@ function handleSearchButtonClick() {
                 .then(response => response.json())
                 .then(data => {
                     renderSearchResults(data.Search)
+                    loader.style.display = "none"
             } )
             .catch((error) => {
                 console.error(error)
+                loader.style.display = "none"
             })
     }
         }
