@@ -161,7 +161,7 @@ function renderSearchResults(moviesArray) {
 
     if (!moviesArray) {
         initialStateMain.innerHTML = `
-        <h2 class="error">Unable to find what you’re looking for. Please try another search.</h2>`
+        <h2 class="error">Unable to find what you’re looking for. Please try another search ❤️</h2>`
     } else {
         initialStateMain.style.display = "none"
 
