@@ -71,6 +71,12 @@ html, body {
     font-weight: 300;
 }
 
+.error {
+    font-size: 1.125rem;
+    color: whitesmoke;
+    text-align: center;
+}
+
 /* Layout */
 
 .container {
@@ -309,6 +315,10 @@ button {
 
     .thankyou-message {
         font-size: 1.125rem;
+    }
+
+    .error {
+        font-size: 1.25rem;
     }
 
     /* Layout */

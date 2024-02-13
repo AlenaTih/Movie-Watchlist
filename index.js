@@ -150,18 +150,20 @@ function handleSearchButtonClick() {
                 .then(data => {
                     renderSearchResults(data.Search)
             } )
-                .catch(error => {
-                    console.error(error)
-                    initialStateMain.innerHTML = `
-                    <h2>Unable to find what you’re looking for. Please try another search.</h2>`
-                })
+            .catch((error) => {
+                console.error(error)
+            })
     }
         }
 }
 
 function renderSearchResults(moviesArray) {
 
-    initialStateMain.style.display = "none"
+    if (!moviesArray) {
+        initialStateMain.innerHTML = `
+        <h2 class="error">Unable to find what you’re looking for. Please try another search.</h2>`
+    } else {
+        initialStateMain.style.display = "none"
 
     let searchResultsHtml = ""
 
@@ -210,6 +212,7 @@ function renderSearchResults(moviesArray) {
             addToWatchList(chosenMovie)
         }
     })
+    }
 
 }
 
