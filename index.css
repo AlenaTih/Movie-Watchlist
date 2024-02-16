@@ -94,7 +94,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-image: url("images/top-background-small.png");
+    background-image: url(images/top-background-small.png);
     background-position: center;
     background-size: cover;
     height: 200px;
