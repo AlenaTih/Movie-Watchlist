@@ -292,8 +292,8 @@ button {
 
 /* Media queries */
 
-/* @media(width >= 600px) */
-@media(min-width: 600px) {
+/* @media (width >= 600px) */
+@media (min-width: 600px) {
     /* Typography and icons */
 
     .title {
