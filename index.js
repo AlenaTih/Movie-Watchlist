@@ -118,21 +118,41 @@ function renderWatchlistFromDatabase(userId) {
 // for...in loop is a special kind of loop in JavaScript that is used
 // to iterate over properties (or keys) of an object
 
-function signOutFromApp() {
+// function signOutFromApp() {
+//     if (googleSignOutButton) {
+//         signOut(auth)
+//         .then(() => {
+//             // User signed out successfully
+//             console.log("User signed out")
+
+//             sessionStorage.clear()
+
+//             checkAuthentication()
+//         })
+//         .catch((error) => {
+//             // Handle errors
+//             console.error("Error signing out:", error)
+//         })
+//     }
+// }
+
+async function signOutFromApp() {
     if (googleSignOutButton) {
-        signOut(auth)
-        .then(() => {
+        try {
+            await signOut(auth)
+        
             // User signed out successfully
             console.log("User signed out")
 
             sessionStorage.clear()
 
             checkAuthentication()
-        })
-        .catch((error) => {
+        
+        }
+        catch (error) {
             // Handle errors
             console.error("Error signing out:", error)
-        })
+        }
     }
 }
 
