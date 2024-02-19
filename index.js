@@ -50,28 +50,27 @@ document.addEventListener("click", function(e) {
 })
 
 // Function to handle sign-in
-function signInWithGoogle() {
+async function signInWithGoogle() {
     if (googleSignInButton) {
-        const provider = new GoogleAuthProvider()
-        signInWithPopup(auth, provider)
-            .then((response) => {
-                console.log(response)
-                // User signed in successfully
-                const user = response.user
-                console.log("User signed in:", user)
+        const provider = new GoogleAuthProvider();
+        try {
+            const response = await signInWithPopup(auth, provider);
+            console.log(response);
+            // User signed in successfully
+            const user = response.user;
+            console.log("User signed in:", user);
 
-                // Store user information in session storage
-                sessionStorage.setItem('user', JSON.stringify(user))
+            // Store user information in session storage
+            sessionStorage.setItem('user', JSON.stringify(user));
 
-                // After user signed in, render the watchlist
-                renderWatchlistFromDatabase(user.uid)
+            // After user signed in, render the watchlist
+            renderWatchlistFromDatabase(user.uid);
 
-                checkAuthentication()
-            })
-            .catch((error) => {
-                // Handle errors
-                console.error("Error signing in:", error)
-            })
+            checkAuthentication();
+        } catch (error) {
+            // Handle errors
+            console.error("Error signing in:", error);
+        }
     }
 }
 
