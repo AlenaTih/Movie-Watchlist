@@ -6,10 +6,10 @@ This is a little but cute web app that allows you to search for movies and add t
 
 ## Features
 
-- **Authentication with Google:** Sign in with your Google account to create your own watchlist.
-- **Search Movies:** Enter a movie title, and the app fetches information from the OMDb API.
-- **Add to Watchlist:** Add your favorite movies or the ones your want to watch to a watchlist with a click of a button.
-- **View Watchlist:** Check out all the movies you've added to your watchlist on the dedicated watchlist page.
+- **Authentication with Google:** sign in with your Google account to create your own watchlist.
+- **Search Movies:** enter a movie title, and the app fetches information from the OMDb API.
+- **Add to Watchlist:** add your favorite movies or the ones your want to watch to a watchlist with a click of a button.
+- **View Watchlist:** check out all the movies you've added to your watchlist on the dedicated watchlist page.
 
 ## Usage
 
