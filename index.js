@@ -152,15 +152,15 @@ function handleSearchButtonClick() {
               .then((response) => response.json())
               .then((data) => {
                 renderSearchResults(data.Search);
-                loader.style.display = "none";
+                loader.style.display = "none"
               })
               .catch((error) => {
                 console.error(error);
-                loader.style.display = "none";
+                loader.style.display = "none"
               })
               .finally(() => {
-                loader.style.display = "none";
-              });
+                loader.style.display = "none"
+              })
     }
         }
 }
