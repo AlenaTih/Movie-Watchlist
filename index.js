@@ -149,15 +149,18 @@ function handleSearchButtonClick() {
             const movieTitle = inputMovie.value
 
             fetch(`https://www.omdbapi.com/?apikey=5f66aad6&s=${movieTitle}`)
-                .then(response => response.json())
-                .then(data => {
-                    renderSearchResults(data.Search)
-                    loader.style.display = "none"
-            } )
-            .catch((error) => {
-                console.error(error)
-                loader.style.display = "none"
-            })
+              .then((response) => response.json())
+              .then((data) => {
+                renderSearchResults(data.Search);
+                loader.style.display = "none";
+              })
+              .catch((error) => {
+                console.error(error);
+                loader.style.display = "none";
+              })
+              .finally(() => {
+                loader.style.display = "none";
+              });
     }
         }
 }
